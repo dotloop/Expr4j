@@ -283,6 +283,14 @@ public class ExcelMathAndTrigFunctionsTest extends TH
 
         assertTrue(isException);
 
+        // Force ArithmeticException
+        assertEquals(eval(p, new ExprDecimal(new BigDecimal("29999999999999999")),
+                new ExprDecimal(new BigDecimal("2147483647"))), ExprError.generateError(ExprError.OVERFLOW));
+
+        // Force an Infinity value
+        assertEquals(eval(p, new ExprDecimal(new BigDecimal("7777")),
+                new ExprDecimal(new BigDecimal("214748364"))), ExprError.generateError(ExprError.OVERFLOW));
+
         for (int i = 0; i < 100; i++) {
             double d1 = Math.random() * 100;
             int d2 = 4;

@@ -11,6 +11,8 @@ package org.boris.expr;
 
 import java.math.BigDecimal;
 
+import org.boris.expr.util.PowerUtil;
+
 public class ExprPower extends AbstractMathematicalOperator
 {
     public ExprPower(Expr lhs, Expr rhs) {
@@ -19,19 +21,8 @@ public class ExprPower extends AbstractMathematicalOperator
 
     @Override
     protected Expr evaluate(ExprNumber lhs, ExprNumber rhs) throws ExprException {
-        try {
-            BigDecimal result = lhs.decimalValue()
-                    .pow(rhs.intValue(), ExprDecimal.MATH_CONTEXT);
-            if (Double.isInfinite(result.doubleValue())) {
-                return ExprError.generateError(ExprError.OVERFLOW);
-            } else {
-                return new ExprDecimal(lhs.decimalValue()
-                        .pow(rhs.intValue(), ExprDecimal.MATH_CONTEXT));
-            }
-        } catch (ArithmeticException e) {
-            return ExprError.generateError(ExprError.OVERFLOW);
-        }
-    }      
+        return PowerUtil.evaluate(lhs.decimalValue(), rhs.intValue());
+    }
     
     public String toString() {
         return lhs + "^" + rhs;

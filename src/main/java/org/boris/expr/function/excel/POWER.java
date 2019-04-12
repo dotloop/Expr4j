@@ -4,11 +4,14 @@ import java.math.BigDecimal;
 
 import org.boris.expr.Expr;
 import org.boris.expr.ExprDecimal;
+import org.boris.expr.ExprError;
 import org.boris.expr.ExprException;
 import org.boris.expr.ExprMissing;
+import org.boris.expr.ExprNumber;
 import org.boris.expr.ExprType;
 import org.boris.expr.IEvaluationContext;
 import org.boris.expr.function.AbstractFunction;
+import org.boris.expr.util.PowerUtil;
 
 public class POWER extends AbstractFunction
 {
@@ -32,8 +35,6 @@ public class POWER extends AbstractFunction
             }
         }
 
-        BigDecimal num = asDecimal(context, args[0], true);
-        int pow = asInteger(context, args[1], true);
-        return new ExprDecimal(num.pow(pow));
+        return PowerUtil.evaluate(asDecimal(context, expr0, true), asDecimal(context, expr1, true).intValue());
     }
 }

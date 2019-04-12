@@ -43,10 +43,8 @@ public class DATEDIF extends AbstractFunction {
         } else if (type.equals(MONTH)) {
             int totalMonths = (int) ChronoUnit.MONTHS.between(today, adjustedDate);
             return new ExprInteger(totalMonths);
-
         } else if (type.equals(YEAR_MONTH)) {
             return new ExprInteger(months);
-
         } else if (type.equals(YEAR_MONTH_DAY)) {
             return new ExprInteger(days);
         }
