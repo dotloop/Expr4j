@@ -9,6 +9,10 @@
  *******************************************************************************/
 package org.boris.expr;
 
+import java.math.BigDecimal;
+
+import org.boris.expr.util.PowerUtil;
+
 public class ExprPower extends AbstractMathematicalOperator
 {
     public ExprPower(Expr lhs, Expr rhs) {
@@ -17,8 +21,8 @@ public class ExprPower extends AbstractMathematicalOperator
 
     @Override
     protected Expr evaluate(ExprNumber lhs, ExprNumber rhs) throws ExprException {
-        return new ExprDecimal(lhs.decimalValue().pow(rhs.intValue(), ExprDecimal.MATH_CONTEXT));        
-    }      
+        return PowerUtil.evaluate(lhs.decimalValue(), rhs.intValue());
+    }
     
     public String toString() {
         return lhs + "^" + rhs;
@@ -31,7 +35,7 @@ public class ExprPower extends AbstractMathematicalOperator
 
     @Override
     protected ExprError assertTypeRight(Expr le, Expr re) throws ExprException {
-        return assertType(re, ExprError.NUM, ExprType.Integer, ExprType.Missing, ExprType.Formatted, ExprType.NumberText);
+        return assertType(re, ExprError.NUM, ExprType.Integer, ExprType.Decimal, ExprType.Missing, ExprType.Formatted, ExprType.NumberText);
     }
 
     @Override
